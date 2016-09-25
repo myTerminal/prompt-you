@@ -45,7 +45,8 @@
 ;;                 (lambda ()
 ;;                     (menu-bar-mode -1)
 ;;                     (tool-bar-mode -1)
-;;                     (scroll-bar-mode -1)))))
+;;                     (scroll-bar-mode -1))))
+;;         "Done: ")
 ;;
 
 ;;; Commentary:
@@ -65,22 +66,28 @@
 (defvar prompt-you--buffer-name
   " *prompt-you*")
 
+(defvar prompt-you--message-prefix
+  "Completed: ")
+
 ;;;###autoload
-(defun prompt-you-now (prompt-text options)
+(defun prompt-you-now (prompt-text options &optional message-prefix)
   (interactive)
-  (let ((my-buffer (get-buffer-create prompt-you--buffer-name)))
+  (let ((my-buffer (get-buffer-create prompt-you--buffer-name))
+        (message-prefix (or message-prefix
+                            prompt-you--message-prefix)))
     (set-window-buffer (get-buffer-window)
                        my-buffer)
     (other-window 1)
     (prompt-you--prepare-controls prompt-text
-                                  options)))
+                                  options
+                                  message-prefix)))
 
 (defun prompt-you--hide-menu ()
   (let ((my-window (get-buffer-window (get-buffer-create prompt-you--buffer-name))))
     (cond ((windowp my-window) (progn
                                  (kill-buffer (get-buffer-create prompt-you--buffer-name)))))))
 
-(defun prompt-you--prepare-controls (prompt-text objects)
+(defun prompt-you--prepare-controls (prompt-text objects message-prefix)
   (princ (cl-concatenate 'string
                          prompt-text
                          "\n\n")
@@ -88,10 +95,13 @@
   (mapc 'prompt-you--display-controls-bindings
         objects)
   (prompt-you-mode)
-  (mapc 'prompt-you--apply-keyboard-bindings
+  (mapc (lambda (object)
+          (funcall #'prompt-you--apply-keyboard-bindings
+                   object
+                   message-prefix))
         objects))
 
-(defun prompt-you--apply-keyboard-bindings (object)
+(defun prompt-you--apply-keyboard-bindings (object message-prefix)
   (let ((option-text (nth 1 object))
         (func (nth 2 object)))
     (local-set-key (kbd (car object))
@@ -99,7 +109,7 @@
                      (interactive)
                      (funcall func)
                      (prompt-you--hide-menu)
-                     (message (concat "Completed: "
+                     (message (concat message-prefix
                                       option-text))))))
 
 (defun prompt-you--display-controls-bindings (object)

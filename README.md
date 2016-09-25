@@ -41,7 +41,8 @@ You can show a prompt with options as
                 (lambda ()
                     (menu-bar-mode -1)
                     (tool-bar-mode -1)
-                    (scroll-bar-mode -1)))))
+                    (scroll-bar-mode -1))))
+        "Done: ")
 
 ## Let me know
 
