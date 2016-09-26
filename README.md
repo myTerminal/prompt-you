@@ -43,9 +43,3 @@ You can show a prompt with options as
                     (tool-bar-mode -1)
                     (scroll-bar-mode -1))))
         "Done: ")
-
-## Let me know
-
-Let me know your suggestions on improving *prompt-you* at ismail@teamfluxion.com
-
-Thank you!
