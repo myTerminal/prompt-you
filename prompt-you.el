@@ -37,12 +37,12 @@
 ;;
 ;;     (prompt-you-now
 ;;         "What would you like to do?"
-;;         (list '("1" 
-;;                 "Invert colors" 
+;;         (list '("1"
+;;                 "Invert colors"
 ;;                 (lambda ()
 ;;                     (invert-face 'default)))
-;;               '("2" 
-;;                 "Clean frame" 
+;;               '("2"
+;;                 "Clean frame"
 ;;                 (lambda ()
 ;;                     (menu-bar-mode -1)
 ;;                     (tool-bar-mode -1)
@@ -116,7 +116,7 @@
 (defun prompt-you--display-controls-bindings (object)
   (princ (cl-concatenate 'string
                          "["
-                         (nth 0 
+                         (nth 0
                               object)
                          "] - "
                          (nth 1
@@ -124,8 +124,8 @@
                          "\n")
          (get-buffer-create prompt-you--buffer-name)))
 
-(define-derived-mode prompt-you-mode 
-  special-mode 
+(define-derived-mode prompt-you-mode
+  special-mode
   "prompt-you"
   :abbrev-table nil
   :syntax-table nil
