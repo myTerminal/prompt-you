@@ -1,4 +1,4 @@
-;;; prompt-you.el --- A simple library to prompt user to select from a list of options -*- lexical-binding: t; coding: utf-8; -*-
+;;; prompt-you.el --- A simple library to prompt user to select from a list of options -*- lexical-binding: t; -*-
 
 ;; This file is not part of Emacs
 
