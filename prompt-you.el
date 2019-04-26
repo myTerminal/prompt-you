@@ -7,7 +7,7 @@
 ;; Keywords: library
 ;; Maintainer: Mohammed Ismail Ansari <team.terminal@gmail.com>
 ;; Created: 2016/09/25
-;; Package-Requires: ((emacs "24") (cl-lib "0.5"))
+;; Package-Requires: ((emacs "24"))
 ;; Description: A simple library to prompt user to select from a list of options
 ;; URL: http://ismail.teamfluxion.com
 ;; Compatibility: Emacs24
@@ -62,8 +62,6 @@
 
 ;;; Code:
 
-(require 'cl-lib)
-
 (defvar prompt-you--buffer-name
   " *prompt-you*")
 
@@ -89,9 +87,8 @@
                                  (kill-buffer (get-buffer-create prompt-you--buffer-name)))))))
 
 (defun prompt-you--prepare-controls (prompt-text objects message-prefix)
-  (princ (cl-concatenate 'string
-                         prompt-text
-                         "\n\n")
+  (princ (concat prompt-text
+                 "\n\n")
          (get-buffer-create prompt-you--buffer-name))
   (mapc 'prompt-you--display-controls-bindings
         objects)
@@ -114,14 +111,13 @@
                                       option-text))))))
 
 (defun prompt-you--display-controls-bindings (object)
-  (princ (cl-concatenate 'string
-                         "["
-                         (nth 0
-                              object)
-                         "] - "
-                         (nth 1
-                              object)
-                         "\n")
+  (princ (concat "["
+                 (nth 0
+                      object)
+                 "] - "
+                 (nth 1
+                      object)
+                 "\n")
          (get-buffer-create prompt-you--buffer-name)))
 
 (define-derived-mode prompt-you-mode
