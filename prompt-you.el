@@ -70,6 +70,7 @@
 
 ;;;###autoload
 (defun prompt-you-now (prompt-text options &optional message-prefix)
+  "Prompts with a text and supplied options to choose one from."
   (interactive)
   (let ((my-buffer (get-buffer-create prompt-you--buffer-name))
         (message-prefix (or message-prefix
@@ -82,11 +83,13 @@
                                   message-prefix)))
 
 (defun prompt-you--hide-menu ()
+  "Hides the visible menu, if any."
   (let ((my-window (get-buffer-window (get-buffer-create prompt-you--buffer-name))))
     (cond ((windowp my-window) (progn
                                  (kill-buffer (get-buffer-create prompt-you--buffer-name)))))))
 
 (defun prompt-you--prepare-controls (prompt-text objects message-prefix)
+  "Prepare controls for the prompt."
   (princ (concat prompt-text
                  "\n\n")
          (get-buffer-create prompt-you--buffer-name))
@@ -100,6 +103,7 @@
         objects))
 
 (defun prompt-you--apply-keyboard-bindings (object message-prefix)
+  "Binds keys for the prompt."
   (let ((option-text (nth 1 object))
         (func (nth 2 object)))
     (local-set-key (kbd (car object))
@@ -111,6 +115,7 @@
                                       option-text))))))
 
 (defun prompt-you--display-controls-bindings (object)
+  "Displays key-bindings for the prompt."
   (princ (concat "["
                  (nth 0
                       object)
